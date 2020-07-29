@@ -40,12 +40,12 @@ public class TemplateDiffUtil extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldList.get(oldItemPosition).getPreviewImage().matches(newList.get(newItemPosition).getPreviewImage());
+        return oldList.get(oldItemPosition).getId()==newList.get(newItemPosition).getId();
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldList.get(oldItemPosition).getTemplateImage().matches(newList.get(newItemPosition).getTemplateImage());
+        return oldList.get(oldItemPosition).getPreviewImage().matches(newList.get(newItemPosition).getPreviewImage());
     }
 
 

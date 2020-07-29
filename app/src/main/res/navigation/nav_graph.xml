@@ -3,16 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/home2">
+    app:startDestination="@id/home">
 
     <fragment
         android:id="@+id/home"
         android:name="eg.com.ivas.ivas_story_maker.View.Home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_to_imageEditor"
+            app:destination="@id/imageEditor" />
+    </fragment>
     <fragment
-        android:id="@+id/home2"
-        android:name="eg.com.ivas.ivas_story_maker.View.Home2"
-        android:label="fragment_home2"
-        tools:layout="@layout/fragment_home2" />
+        android:id="@+id/imageCrop"
+        android:name="eg.com.ivas.ivas_story_maker.View.ImageCrop"
+        android:label="fragment_image_crop"
+        tools:layout="@layout/fragment_image_crop" />
+    <fragment
+        android:id="@+id/imageEditor"
+        android:name="eg.com.ivas.ivas_story_maker.View.ImageEditor"
+        android:label="fragment_image_editor"
+        tools:layout="@layout/fragment_image_editor" >
+        <action
+            android:id="@+id/action_imageEditor_to_imageCrop"
+            app:destination="@id/imageCrop" />
+        <action
+            android:id="@+id/action_imageEditor_to_imageFilter"
+            app:destination="@id/imageFilter" />
+        <action
+            android:id="@+id/action_imageEditor_to_imageShare"
+            app:destination="@id/imageShare"
+            app:popUpTo="@id/home" />
+        <action
+            android:id="@+id/action_imageEditor_to_imageSpiral"
+            app:destination="@id/imageSpiral" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFilter"
+        android:name="eg.com.ivas.ivas_story_maker.View.ImageFilter"
+        android:label="ImageFilter"
+        tools:layout="@layout/fragment_image_filter"
+        />
+    <fragment
+        android:id="@+id/imageShare"
+        android:name="eg.com.ivas.ivas_story_maker.View.ImageShare"
+        android:label="fragment_image_share"
+        tools:layout="@layout/fragment_image_share" />
+    <fragment
+        android:id="@+id/imageSpiral"
+        android:name="eg.com.ivas.ivas_story_maker.View.ImageSpiral"
+        android:label="ImageSpiral"
+        tools:layout="@layout/fragment_image_filter"
+        />
 </navigation>

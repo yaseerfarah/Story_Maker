@@ -1,37 +1,20 @@
 package eg.com.ivas.ivas_story_maker.Adapter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
-import eg.com.ivas.ivas_story_maker.Interface.CategorySelectListener;
+import ja.burhanrashid52.photoeditor.ItemSelectListener;
 import eg.com.ivas.ivas_story_maker.POJO.CategoryInfo;
 import eg.com.ivas.ivas_story_maker.POJO.TemplateInfo;
 import eg.com.ivas.ivas_story_maker.R;
@@ -41,7 +24,7 @@ import eg.com.ivas.ivas_story_maker.R;
  * Created by DELL on 1/17/2019.
  */
 
-public class CardTemplateAdapter extends RecyclerView.Adapter<CardTemplateAdapter.Category_holder> implements CategorySelectListener {
+public class CardTemplateAdapter extends RecyclerView.Adapter<CardTemplateAdapter.Category_holder> implements ItemSelectListener<CategoryInfo> {
 
 
     private Context context;

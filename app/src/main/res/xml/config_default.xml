@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <entry>
+        <key>launch_check</key>
+        <value>true</value>
+    </entry>
+
+</defaultsMap>

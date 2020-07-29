@@ -2,4 +2,7 @@
     <string name="app_name">iVas Story Maker</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="check_connection"> تحقق من إتصالك</string>
+    <string name="success"> تم حفظ الصورة بنجاح</string>
+    <string name="try_again">حاول مرة اخرى مع صورة اقل حجما</string>
 </resources>

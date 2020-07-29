@@ -32,7 +32,7 @@ public class NetworkReceiver extends BroadcastReceiver {
 
                 NetworkCapabilities networkCapabilities=cm.getNetworkCapabilities(cm.getActiveNetwork());
 
-                if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)&&networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                if (networkCapabilities!=null&&networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)&&networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED))
                 {
                     this.networkConnection.Connect();
                 }else {

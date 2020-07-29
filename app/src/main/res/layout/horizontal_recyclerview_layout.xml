@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="2"
     android:layout_marginTop="@dimen/_5sdp"
     android:layout_marginBottom="@dimen/_5sdp"
+    android:layoutDirection="rtl"
     >
 
     <ImageButton
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
         android:background="@drawable/round_b"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_baseline_arrow_right"
         android:id="@+id/start"
         android:layout_marginStart="10dp"
         android:scaleX="-1"
-        android:layout_weight="0"
         android:paddingStart="@dimen/_2sdp"
+        android:layout_alignParentStart="true"
+
         />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
@@ -26,18 +26,20 @@
         android:id="@+id/horizontalRecycler"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:layout_toEndOf="@+id/start"
+        android:layout_toStartOf="@+id/end"
         />
     <ImageButton
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
         android:background="@drawable/round_b"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_baseline_arrow_right"
         android:id="@+id/end"
         android:layout_marginEnd="10dp"
-        android:layout_weight="0"
         android:paddingStart="@dimen/_2sdp"
+        android:layout_alignParentEnd="true"
         />
 
-</LinearLayout>
+</RelativeLayout>

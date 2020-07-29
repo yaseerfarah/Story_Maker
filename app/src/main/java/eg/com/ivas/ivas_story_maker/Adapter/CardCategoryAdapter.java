@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import eg.com.ivas.ivas_story_maker.Interface.CategorySelectListener;
+import ja.burhanrashid52.photoeditor.ItemSelectListener;
 import eg.com.ivas.ivas_story_maker.POJO.CategoryInfo;
 import eg.com.ivas.ivas_story_maker.R;
 
@@ -43,7 +43,7 @@ public class CardCategoryAdapter extends RecyclerView.Adapter<CardCategoryAdapte
     private RecyclerView mRecyclerView;
     private List<CategoryInfo> categoryInfoList ;
     private CategoryInfo currantCategory;
-    private CategorySelectListener categorySelectListener;
+    private ItemSelectListener categorySelectListener;
     private Category_holder lastCheck;
     private int button_index;
 
@@ -58,12 +58,12 @@ public class CardCategoryAdapter extends RecyclerView.Adapter<CardCategoryAdapte
     };
 
 
-    public CardCategoryAdapter(Context context, List<CategoryInfo> categoryInfoList, CategorySelectListener categorySelectListener) {
+    public CardCategoryAdapter(Context context, List<CategoryInfo> categoryInfoList, ItemSelectListener categorySelectListener) {
         this.context = context;
         this.categoryInfoList = categoryInfoList;
         this.categorySelectListener = categorySelectListener;
         this.button_index =0;
-        categorySelectListener.onSelect(categoryInfoList.get(0));
+
 
     }
 
@@ -92,7 +92,7 @@ public class CardCategoryAdapter extends RecyclerView.Adapter<CardCategoryAdapte
         holder.setIsRecyclable(false);
         holder.title.setText(categoryInfoList.get(holder.getAdapterPosition()).getTitle());
         //holder.progressBar.setVisibility(View.VISIBLE);
-        /*Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getIconImage())
+        Glide.with(context).load(categoryInfoList.get(holder.getAdapterPosition()).getIconImage())
                 .apply(RequestOptions.timeoutOf(60*1000))
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
                 .listener(new RequestListener<Drawable>() {
@@ -108,9 +108,9 @@ public class CardCategoryAdapter extends RecyclerView.Adapter<CardCategoryAdapte
                         return false;
                     }
                 })
-                .into(holder.icon);*/
+                .into(holder.icon);
 
-        holder.icon.setBackground(context.getDrawable(icons[holder.getAdapterPosition()]));
+       // holder.icon.setBackground(context.getDrawable(icons[holder.getAdapterPosition()]));
 
         if (button_index==holder.getAdapterPosition()){
             holder.transition.startTransition(0);

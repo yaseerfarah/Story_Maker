@@ -122,7 +122,9 @@ class MultiTouchListener implements OnTouchListener {
         if (backfilter!=null){
            backfilterTouchListener.onTouch(backfilter,event);
         }
-
+        if (mOnGestureControl != null) {
+            mOnGestureControl.onTouchListener();
+        }
         mScaleGestureDetector.onTouchEvent(view, event);
         mGestureListener.onTouchEvent(event);
 
@@ -258,6 +260,8 @@ class MultiTouchListener implements OnTouchListener {
         void onClick();
 
         void onLongClick();
+
+        void onTouchListener();
     }
 
     void setOnGestureControl(OnGestureControl onGestureControl) {
@@ -280,5 +284,10 @@ class MultiTouchListener implements OnTouchListener {
                 mOnGestureControl.onLongClick();
             }
         }
+
+
+
+
+
     }
 }

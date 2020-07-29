@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -52,6 +53,9 @@ public class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Rend
     private CustomEffect mCustomEffect;
     private OnSaveBitmap mOnSaveBitmap;
     private boolean isSaveImage = false;
+    private FilterCompleteListener filterCompleteListener;
+
+
 
     public ImageFilterView(Context context) {
         super(context);
@@ -131,6 +135,14 @@ public class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Rend
         requestRender();
     }
 
+    public void setFilterEffect(PhotoFilter effect,FilterCompleteListener filterCompleteListener) {
+        this.filterCompleteListener=filterCompleteListener;
+        mCurrentEffect = effect;
+        mCustomEffect = null;
+        requestRender();
+    }
+
+
     void setFilterEffect(CustomEffect customEffect) {
         mCustomEffect = customEffect;
         requestRender();
@@ -145,6 +157,7 @@ public class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Rend
 
     private void loadTextures() {
         // Generate textures
+        GLES20.glDeleteTextures(2, mTextures, 0);
         GLES20.glGenTextures(2, mTextures, 0);
         GLES20. glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -283,5 +296,9 @@ public class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Rend
             // render the result of applyEffect()
             mTexRenderer.renderTexture(mTextures[0]);
         }
+        if (filterCompleteListener!=null){
+            filterCompleteListener.onFilterComplete();
+        }
+
     }
 }

@@ -60,6 +60,7 @@ public class PhotoEditorView extends RelativeLayout {
     @SuppressLint("Recycle")
     private void init(@Nullable AttributeSet attrs) {
         //Setup image attributes
+        setBackgroundColor(getResources().getColor(R.color.white));
         mImgSource = new FilterImageView(getContext());
         mImgSource.setId(imgSrcId);
         mImgSource.setAdjustViewBounds(true);
@@ -116,7 +117,7 @@ public class PhotoEditorView extends RelativeLayout {
         addView(mImageFilterView, imgFilterParam);
 
         //Add brush view
-        addView(mBrushDrawingView, brushParam);
+        //addView(mBrushDrawingView, brushParam);
 
     }
 
@@ -156,6 +157,12 @@ public class PhotoEditorView extends RelativeLayout {
         }
 
 
+    }
+
+    void setFilterEffect(PhotoFilter filterType,FilterCompleteListener filterCompleteListener) {
+        mImageFilterView.setVisibility(VISIBLE);
+        mImageFilterView.setSourceBitmap(mImgSource.getBitmap());
+        mImageFilterView.setFilterEffect(filterType,filterCompleteListener);
     }
 
     void setFilterEffect(PhotoFilter filterType) {

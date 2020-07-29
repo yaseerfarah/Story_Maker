@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="ltr"
+    >
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+
+            android:id="@+id/dialog_cardView"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="8dp"
+            android:elevation="1dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Text"
+                    android:textSize="@dimen/_18sdp"
+                    android:maxHeight="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
+                    android:gravity="center|top"
+                    android:inputType="textMultiLine"
+                    android:imeOptions="actionDone"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/txt_bold"
+                    android:background="@drawable/border_e"
+                    android:id="@+id/txt_edit"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
+
+
+                <ToggleButton
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:textOff=" "
+                    android:textOn=" "
+                    android:layout_toEndOf="@+id/txt_bold"
+                    android:background="@drawable/italic_toggle"
+                    android:layout_above="@+id/add"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/txt_italic"
+
+                    />
+
+                <ToggleButton
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:textOff=" "
+                    android:textOn=" "
+                    android:background="@drawable/bold_toggle"
+                    android:layout_above="@+id/add"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/txt_bold"
+
+                    />
+
+
+                <ImageButton
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:background="@drawable/rectangle_b_selector"
+                    android:layout_above="@+id/add"
+                    android:layout_toStartOf="@+id/txt_bold"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/txt_color"
+                    android:src="@drawable/ic_baseline_color_lens_24"
+                    />
+
+
+
+                <ImageButton
+                    android:layout_width="@dimen/_46sdp"
+                    android:layout_height="@dimen/_26sdp"
+                    android:background="@drawable/rectangle_b_selector"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/add"
+                    android:src="@drawable/ic_done"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

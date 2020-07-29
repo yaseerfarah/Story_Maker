@@ -5,25 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".View.Home">
 
+   <include layout="@layout/app_bar_layout"/>
 
-
-<include layout="@layout/app_bar_layout"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <com.gturedi.views.StatefulLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/categoryRecycle"
-        android:layout_below="@+id/home_bar"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/home_bar"
+        android:id="@+id/stateful"
+        >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/templateRecycle"
-        android:layout_below="@+id/categoryRecycle"/>
+        android:id="@+id/homeRecycler"
+        />
 
-
-
-
+</RelativeLayout>
+    </com.gturedi.views.StatefulLayout>
 
 
 </RelativeLayout>

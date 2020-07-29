@@ -2,8 +2,11 @@ package ja.burhanrashid52.photoeditor;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -11,14 +14,22 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
 import androidx.annotation.UiThread;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import android.os.Build;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -76,7 +87,7 @@ public class PhotoEditor implements BrushViewChangeListener {
     }
 
 
-    public void setParentView(PhotoEditorView parentView,Bitmap newImage){
+    public void setParentView(PhotoEditorView parentView,Bitmap newImage ,ItemSelectListener<View> itemItemSelectListener){
         if (!addedViews.isEmpty()){
                 this.parentView.removeAllViews();
         }
@@ -97,7 +108,7 @@ public class PhotoEditor implements BrushViewChangeListener {
                     }
 
                     if (newImage!=null){
-                        addImage(newImage);
+                        addImage(newImage,itemItemSelectListener);
                     }
         });
 
@@ -148,6 +159,11 @@ public class PhotoEditor implements BrushViewChangeListener {
             public void onLongClick() {
 
             }
+
+            @Override
+            public void onTouchListener() {
+
+            }
         });
 
         imageRootView.setOnTouchListener(multiTouchListener);
@@ -159,7 +175,7 @@ public class PhotoEditor implements BrushViewChangeListener {
 
 
 
-    public void addImage(Bitmap desiredImage) {
+    public void addImage(Bitmap desiredImage,ItemSelectListener<View> itemSelectListener) {
         final View imageRootView = getLayout(ViewType.IMAGE);
         final ImageView imageView = imageRootView.findViewById(R.id.imgPhotoEditorImage);
         final FrameLayout frmBorder = imageRootView.findViewById(R.id.frmBorder);
@@ -172,14 +188,16 @@ public class PhotoEditor implements BrushViewChangeListener {
         multiTouchListener.setOnGestureControl(new MultiTouchListener.OnGestureControl() {
             @Override
             public void onClick() {
-              /*  boolean isBackgroundVisible = frmBorder.getTag() != null && (boolean) frmBorder.getTag();
-                frmBorder.setBackgroundResource(isBackgroundVisible ? 0 : R.drawable.rounded_border_tv);
-                imgClose.setVisibility(isBackgroundVisible ? View.GONE : View.VISIBLE);
-                frmBorder.setTag(!isBackgroundVisible);*/
             }
 
             @Override
             public void onLongClick() {
+
+            }
+
+            @Override
+            public void onTouchListener() {
+                itemSelectListener.onSelect(imageRootView);
 
             }
         });
@@ -235,8 +253,8 @@ public class PhotoEditor implements BrushViewChangeListener {
      * @param colorCodeTextView text color to be displayed
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void addText(String text, final int colorCodeTextView) {
-        addText(null, text, colorCodeTextView);
+    public void addText(String text, final int colorCodeTextView,ItemSelectListener<View> itemSelectListener) {
+        addText(null, text, colorCodeTextView,itemSelectListener);
     }
 
     /**
@@ -248,7 +266,7 @@ public class PhotoEditor implements BrushViewChangeListener {
      * @param colorCodeTextView text color to be displayed
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void addText(@Nullable Typeface textTypeface, String text, final int colorCodeTextView) {
+    public void addText(@Nullable Typeface textTypeface, String text, final int colorCodeTextView,ItemSelectListener<View> itemSelectListener) {
         final TextStyleBuilder styleBuilder = new TextStyleBuilder();
 
         styleBuilder.withTextColor(colorCodeTextView);
@@ -256,7 +274,7 @@ public class PhotoEditor implements BrushViewChangeListener {
             styleBuilder.withTextFont(textTypeface);
         }
 
-        addText(text, styleBuilder);
+        addText(text, styleBuilder,itemSelectListener);
     }
 
     /**
@@ -267,7 +285,7 @@ public class PhotoEditor implements BrushViewChangeListener {
      * @param styleBuilder text style builder with your style
      */
     @SuppressLint("ClickableViewAccessibility")
-    public void addText(String text, @Nullable TextStyleBuilder styleBuilder) {
+    public void addText(String text, @Nullable TextStyleBuilder styleBuilder,ItemSelectListener<View> itemSelectListener) {
         brushDrawingView.setBrushDrawingMode(false);
         final View textRootView = getLayout(ViewType.TEXT);
         final TextView textInputTv = textRootView.findViewById(R.id.tvPhotoEditorText);
@@ -282,10 +300,7 @@ public class PhotoEditor implements BrushViewChangeListener {
         multiTouchListener.setOnGestureControl(new MultiTouchListener.OnGestureControl() {
             @Override
             public void onClick() {
-               /* boolean isBackgroundVisible = frmBorder.getTag() != null && (boolean) frmBorder.getTag();
-                frmBorder.setBackgroundResource(isBackgroundVisible ? 0 : R.drawable.rounded_border_tv);
-                imgClose.setVisibility(isBackgroundVisible ? View.GONE : View.VISIBLE);
-                frmBorder.setTag(!isBackgroundVisible);*/
+
             }
 
             @Override
@@ -295,6 +310,11 @@ public class PhotoEditor implements BrushViewChangeListener {
                 if (mOnPhotoEditorListener != null) {
                     mOnPhotoEditorListener.onEditTextChangeListener(textRootView, textInput, currentTextColor);
                 }
+            }
+
+            @Override
+            public void onTouchListener() {
+                itemSelectListener.onSelect(textRootView);
             }
         });
 
@@ -392,6 +412,11 @@ public class PhotoEditor implements BrushViewChangeListener {
 
             @Override
             public void onLongClick() {
+            }
+
+            @Override
+            public void onTouchListener() {
+
             }
         });
         emojiRootView.setOnTouchListener(multiTouchListener);
@@ -729,9 +754,10 @@ public class PhotoEditor implements BrushViewChangeListener {
      * Set pre-define filter available
      *
      * @param filterType type of filter want to apply {@link PhotoEditor}
+     * @param filterCompleteListener
      */
-    public void setFilterEffect(PhotoFilter filterType) {
-        parentView.setFilterEffect(filterType);
+    public void setFilterEffect(PhotoFilter filterType, FilterCompleteListener filterCompleteListener) {
+        parentView.setFilterEffect(filterType,filterCompleteListener);
     }
 
     /**
@@ -846,8 +872,8 @@ public class PhotoEditor implements BrushViewChangeListener {
      * @see OnSaveBitmap
      */
     @SuppressLint("StaticFieldLeak")
-    public void saveAsBitmap(@NonNull final OnSaveBitmap onSaveBitmap) {
-        saveAsBitmap(new SaveSettings.Builder().build(), onSaveBitmap);
+    public void saveAsBitmap(@NonNull final OnSaveBitmap onSaveBitmap,Activity activity) {
+        saveAsBitmap(new SaveSettings.Builder().build(), onSaveBitmap,activity);
     }
 
     /**
@@ -859,42 +885,51 @@ public class PhotoEditor implements BrushViewChangeListener {
      */
     @SuppressLint("StaticFieldLeak")
     public void saveAsBitmap(@NonNull final SaveSettings saveSettings,
-                             @NonNull final OnSaveBitmap onSaveBitmap) {
+                             @NonNull final OnSaveBitmap onSaveBitmap, Activity activity) {
+
         parentView.saveFilter(new OnSaveBitmap() {
             @Override
             public void onBitmapReady(Bitmap saveBitmap) {
-                new AsyncTask<String, String, Bitmap>() {
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        clearHelperBox();
-                        parentView.setDrawingCacheEnabled(false);
-                    }
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
 
-                    @Override
-                    protected Bitmap doInBackground(String... strings) {
-                        if (addedViews.get(0) != null) {
-                            parentView.setDrawingCacheEnabled(true);
-                            return saveSettings.isTransparencyEnabled() ?
-                                    BitmapUtil.removeTransparency(parentView.getDrawingCache())
-                                    : parentView.getDrawingCache();
-                        } else {
-                            return null;
+                    getBitmapFromView(parentView, activity,saveSettings,onSaveBitmap);
+                }else {
+
+                    new AsyncTask<String, String, Bitmap>() {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            clearHelperBox();
+                            parentView.setDrawingCacheEnabled(false);
                         }
-                    }
 
-                    @Override
-                    protected void onPostExecute(Bitmap bitmap) {
-                        super.onPostExecute(bitmap);
-                        if (bitmap != null) {
-                            if (saveSettings.isClearViewsEnabled()) clearAllViews();
-                            onSaveBitmap.onBitmapReady(bitmap);
-                        } else {
-                            onSaveBitmap.onFailure(new Exception("Failed to load the bitmap"));
+                        @Override
+                        protected Bitmap doInBackground(String... strings) {
+                            if (addedViews.get(0) != null) {
+                                parentView.setDrawingCacheEnabled(true);
+                                return saveSettings.isTransparencyEnabled() ?
+                                        BitmapUtil.removeTransparency(parentView.getDrawingCache())
+                                        : parentView.getDrawingCache();
+
+
+                            } else {
+                                return null;
+                            }
                         }
-                    }
 
-                }.execute();
+                        @Override
+                        protected void onPostExecute(Bitmap bitmap) {
+                            super.onPostExecute(bitmap);
+                            if (bitmap != null) {
+                                if (saveSettings.isClearViewsEnabled()) clearAllViews();
+                                onSaveBitmap.onBitmapReady(bitmap);
+                            } else {
+                                onSaveBitmap.onFailure(new Exception("Failed to load the bitmap"));
+                            }
+                        }
+
+                    }.execute();
+                }
             }
 
             @Override
@@ -1063,4 +1098,64 @@ public class PhotoEditor implements BrushViewChangeListener {
         }
         return convertedEmojiList;
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void getBitmapFromView(View view, Activity activity, SaveSettings saveSettings, OnSaveBitmap onSaveBitmap) {
+       /* Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+       /* for (View v:addedViews){
+            v.draw(canvas);
+        }
+
+       if (saveBitmap!=null){
+
+       }
+
+        ViewGroup parent = (ViewGroup) view;
+        final int count = parent.getChildCount();
+        Log.e("ERRoR Count",String.valueOf(count));
+        try {
+            view.draw(canvas);
+        } catch (Exception e) {
+           Log.e("ERRoR Image",e.getMessage()); e.printStackTrace();
+        }
+*/
+
+        Completable.create(emitter -> {
+
+            clearHelperBox();
+
+            emitter.onComplete();
+
+        }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+
+                    Window window=activity.getWindow();
+                    Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+                    int[] locationOfViewInWindow = new int[2];
+                    view.getLocationInWindow(locationOfViewInWindow);
+                    try {
+                        PixelCopy.request(window, new Rect(locationOfViewInWindow[0], locationOfViewInWindow[1], locationOfViewInWindow[0] + view.getWidth(), locationOfViewInWindow[1] + view.getHeight()), bitmap,copyResult -> {
+                            if (copyResult == PixelCopy.SUCCESS) {
+                                onSaveBitmap.onBitmapReady(bitmap);
+                                if (saveSettings.isClearViewsEnabled()) clearAllViews();
+                            }
+                            // possible to handle other result codes ...
+                        },new Handler());
+                    } catch (Exception e) {
+                        // PixelCopy may throw IllegalArgumentException, make sure to handle it
+                        e.printStackTrace();
+                        onSaveBitmap.onFailure(e);
+                    }
+                });
+
+
+
+
+
+
+
+    }
+
 }

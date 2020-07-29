@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.ImageCrop"
+    android:layoutDirection="ltr"
+    >
+
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/close"
+            android:background="@drawable/rectangle_b"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_baseline_close_24"
+            android:visibility="invisible"
+            />
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/c_sq"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_rec"
+            />
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/c_fr"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_cut"
+            />
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/c_cr"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_circle"
+            />
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/done"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_done"
+            android:visibility="invisible"
+            />
+
+
+        <com.isseiaoki.simplecropview.CropImageView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cropImageView"
+            android:layout_weight="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            custom:scv_background_color="@android:color/white"
+            custom:scv_overlay_color="@color/tra_blue"
+            custom:scv_frame_color="@color/colorPrimaryDark"
+            custom:scv_handle_color="@color/colorPrimaryDark"
+            custom:scv_guide_color="@color/colorPrimaryDark"
+            custom:scv_guide_show_mode="show_always"
+            custom:scv_handle_show_mode="show_always"
+            custom:scv_handle_size="14dp"
+            custom:scv_touch_padding="8dp"
+            custom:scv_min_frame_size="50dp"
+            custom:scv_frame_stroke_weight="1dp"
+            custom:scv_guide_stroke_weight="1dp"
+
+            custom:scv_initial_frame_scale="1.0"
+            custom:scv_animation_enabled="true"
+            custom:scv_animation_duration="200"
+            custom:scv_handle_shadow_enabled="true"
+            android:layout_above="@+id/gal"
+            android:layout_below="@+id/c_sq"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            />
+
+
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/gal"
+            android:background="@drawable/rectangle_b"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_add_image"
+            />
+
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/crop"
+            android:background="@drawable/rectangle_b"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_done"
+            />
+
+
+
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/r_right"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/done"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_r_right"
+            />
+
+        <ImageButton
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:id="@+id/r_left"
+            android:layout_toEndOf="@+id/gal"
+            android:background="@drawable/rectangle_b_selector"
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_r_left"
+
+            />
+
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"/>
+
+
+
+
+</RelativeLayout>

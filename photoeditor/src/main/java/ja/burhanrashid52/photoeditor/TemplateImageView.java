@@ -2,8 +2,11 @@ package ja.burhanrashid52.photoeditor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -31,12 +34,17 @@ public class TemplateImageView extends ImageView {
         Drawable d = getDrawable();
         if (d != null) {
             if (d.getIntrinsicWidth()>=d.getIntrinsicHeight()) {
+
                 int w = MeasureSpec.getSize(widthMeasureSpec);
                 int h = w * d.getIntrinsicHeight() / d.getIntrinsicWidth();
-                setMeasuredDimension(w, h);
+
+                setMeasuredDimension(w,h);
+
+
             }else {
                 int h = MeasureSpec.getSize(heightMeasureSpec);
                 int w = h * d.getIntrinsicWidth() / d.getIntrinsicHeight();
+
 
                 setMeasuredDimension(w, h);
             }
